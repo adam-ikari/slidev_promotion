@@ -185,7 +185,7 @@ image: https://cover.sli.dev
 
 ```ts [filename-example.ts] {all|4|6|6-7|9|all} twoslash
 // TwoSlash 启用 TypeScript 悬停信息
-// 和在 markdown 代码块中显示错误
+// 和在代码块中显示错误
 // 更多信息请访问 https://shiki.style/packages/twoslash
 import { computed, ref } from 'vue'
 
@@ -382,7 +382,7 @@ theme: seriph
 
 点击幻灯片时显示：
 
-```markdown
+```
 <v-click>点击幻灯片时显示。</v-click>
 ```
 
@@ -449,7 +449,7 @@ theme: seriph
   </div>
 </div>
 
-<!-- vue script setup 脚本可以直接在 markdown 中使用，并且只影响当前页面 -->
+<!-- vue script setup 脚本可以直接在代码中使用，并且只影响当前页面 -->
 <script setup lang="ts">
 const final = {
   x: 0,
@@ -588,7 +588,7 @@ dragPos:
 
 ###### 指令用法
 
-```md
+```
 <img v-drag="'square'" src="https://sli.dev/logo.png">
 ```
 
@@ -596,7 +596,7 @@ dragPos:
 
 ###### 组件用法
 
-```md
+```
 <v-drag text-3xl>
   <div class="i-carbon:arrow-up" />
   使用 `v-drag` 组件来获得可拖拽容器！
@@ -613,7 +613,7 @@ dragPos:
 
 ###### 可拖拽箭头
 
-```md
+```
 <v-drag-arrow two-way />
 ```
 
@@ -651,8 +651,19 @@ console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-
 ```
 
 ---
-layout: center
-class: text-center
+
+# 第三方库集成
+
+Slidev 支持集成各种第三方库，包括 Three.js、D3.js 等流行库。
+
+---
+
+## Three.js 3D 演示
+
+下面是一个使用 Three.js 创建的 3D 立方体演示：
+
+<three-demo />
+
 ---
 
 # 了解更多
