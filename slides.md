@@ -8,7 +8,7 @@ background: https://cover.sli.dev
 title: 欢迎来到 Slidev
 info: |
   ## Slidev 入门模板
-  面向开发者的演示文稿工具
+  AI 时代的幻灯片工具
 
   了解更多请访问 [Sli.dev](https://sli.dev)
 # apply unocss classes to the current slide
@@ -30,7 +30,7 @@ seoMeta:
 
 # 欢迎来到 Slidev
 
-面向开发者的演示文稿工具
+AI 时代的幻灯片工具
 
 <div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
   按空格键进入下一页 <carbon:arrow-right />
@@ -58,6 +58,7 @@ transition: fade-out
 Slidev 是一个专为开发者设计的幻灯片制作和演示工具。
 
 它基于 Markdown，让你可以专注于内容创作而不是样式设计。
+基于 Markdown 意味着，AI文本大模型可以轻松的生成幻灯片。
 
 ---
 
