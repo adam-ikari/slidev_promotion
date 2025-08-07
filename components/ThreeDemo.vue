@@ -20,21 +20,24 @@ onMounted(async () => {
 
   // 创建场景
   scene = new THREE.Scene()
+  scene.background = null // 设置背景为透明
   
   // 创建相机
   camera = new THREE.PerspectiveCamera(75, container.value.clientWidth / container.value.clientHeight, 0.1, 1000)
   
   // 创建渲染器
-  renderer = new THREE.WebGLRenderer({ antialias: true })
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }) // 启用透明背景
   renderer.setSize(container.value.clientWidth, container.value.clientHeight)
-  renderer.setClearColor(0x1e1e20)
+  renderer.setClearColor(0x000000, 0) // 设置 clearColor 为透明
   container.value.appendChild(renderer.domElement)
   
   // 创建立方体
   const geometry = new THREE.BoxGeometry(2, 2, 2)
   const material = new THREE.MeshPhongMaterial({ 
     color: 0x00aaff,
-    shininess: 100 
+    shininess: 100,
+    transparent: true,
+    opacity: 0.9
   })
   cube = new THREE.Mesh(geometry, material)
   scene.add(cube)
@@ -92,8 +95,7 @@ onUnmounted(() => {
 
 <style scoped>
 .three-demo-container {
-  border: 1px solid #444;
-  border-radius: 8px;
   overflow: hidden;
+  background: transparent; /* 设置容器背景为透明 */
 }
 </style>
