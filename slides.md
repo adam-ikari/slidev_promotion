@@ -30,7 +30,7 @@ seoMeta:
 
 # 欢迎来到 Slidev
 
-AI 时代的幻灯片工具
+<h2>✨ AI 时代的幻灯片工具</h2>
 
 <div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
   按空格键进入下一页 <carbon:arrow-right />
@@ -656,15 +656,27 @@ console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-
 
 # 第三方库集成
 
-Slidev 支持集成各种第三方库，包括 Three.js、D3.js 等流行库。
+Slidev 支持集成各种第三方库，包括 Three.js、ECharts 等流行库。
 
 ---
 
-## Three.js 3D 演示
+## Three.js演示
 
-下面是一个使用 Three.js 创建的 3D 立方体演示：
+下面是一个使用 Three.js 创建的立方体演示：
 
-<three-demo />
+<ThreeDemo />
+
+---
+
+## 数据可视化演示
+
+下面是一个使用 ECharts 创建的数据可视化图表：
+
+<chart-demo />
+
+---
+
+通过 Vue 组件，你可以轻松地将各种第三方库集成到你的幻灯片中，为观众带来丰富的视觉体验和数据展示。
 
 ---
 

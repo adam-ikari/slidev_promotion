@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
 const container = ref<HTMLDivElement | null>(null)
 let scene: any
@@ -11,12 +11,28 @@ let animationId: number
 // 动态导入 three.js 以避免服务端渲染问题
 let THREE: any
 
-onMounted(async () => {
+// 初始化Three.js场景的函数
+const initScene = async () => {
   if (!container.value) return
 
   // 动态导入 three.js
-  const threeModule = await import('three')
-  THREE = threeModule
+  if (!THREE) {
+    const threeModule = await import('three')
+    THREE = threeModule
+  }
+
+  // 如果已经存在场景元素，先清理
+  if (renderer) {
+    renderer.dispose()
+    if (container.value && renderer.domElement) {
+      container.value.removeChild(renderer.domElement)
+    }
+  }
+  
+  // 清理动画循环
+  if (animationId) {
+    cancelAnimationFrame(animationId)
+  }
 
   // 创建场景
   scene = new THREE.Scene()
@@ -67,22 +83,55 @@ onMounted(async () => {
   }
   
   animate()
-  
-  // 窗口大小调整
-  const handleResize = () => {
-    if (!container.value || !camera || !renderer) return
-    camera.aspect = container.value.clientWidth / container.value.clientHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize(container.value.clientWidth, container.value.clientHeight)
-  }
+}
+
+// 处理窗口大小调整
+const handleResize = () => {
+  if (!container.value || !camera || !renderer) return
+  camera.aspect = container.value.clientWidth / container.value.clientHeight
+  camera.updateProjectionMatrix()
+  renderer.setSize(container.value.clientWidth, container.value.clientHeight)
+}
+
+onMounted(async () => {
+  await initScene()
   
   window.addEventListener('resize', handleResize)
+  setTimeout(handleResize, 0)
 })
 
+// 使用ResizeObserver监听容器大小变化，以便在幻灯片切换时重新初始化
+const resizeObserver = new ResizeObserver(() => {
+  if (container.value) {
+    // 容器大小变化时重新初始化场景
+    initScene()
+  } else {
+    handleResize()
+  }
+})
+
+// 在容器可用时开始观察大小变化
+watch(container, (newVal) => {
+  if (newVal) {
+    resizeObserver.observe(newVal)
+  }
+}, { immediate: true })
+
 onUnmounted(() => {
+  // 清理事件监听器
+  window.removeEventListener('resize', handleResize)
+  
+  // 停止观察
+  if (container.value) {
+    resizeObserver.unobserve(container.value)
+  }
+  
+  // 清理动画循环
   if (animationId) {
     cancelAnimationFrame(animationId)
   }
+  
+  // 清理渲染器
   if (renderer) {
     renderer.dispose()
   }
